@@ -1,0 +1,40 @@
+# --- Python cache and bytecode ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Virtual environment ---
+venv/
+.env/
+env/
+.env
+config.yaml
+
+# --- Data files (user data, logs, etc.) ---
+data/
+*.db
+*.sqlite
+*.json
+*.log
+
+# --- OS-specific files ---
+.DS_Store
+Thumbs.db
+
+# --- IDE / Editor files ---
+.vscode/
+.idea/
+*.swp
+
+# --- Python packaging ---
+build/
+dist/
+*.egg-info/
+
+# --- Jupyter Notebooks (if any) ---
+.ipynb_checkpoints/
+
+# --- Test / Coverage ---
+htmlcov/
+.coverage
+.pytest_cache/
