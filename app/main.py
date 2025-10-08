@@ -1,7 +1,7 @@
 import pick
 import time
 
-from handle_tasks import load_tasks
+from handle_tasks import add_task, edit_task, load_tasks
 
 
 # get a time in minutes and convert it to seconds if the minutes are greater than 0 or it will produce and error
@@ -61,10 +61,17 @@ def start_session(duration, task):
 
 
 def add_or_edit_tasks():
-    tasks_list = load_tasks()
-    for task in tasks_list:
-        print(task)
-    # while True:
+    while True:
+        tasks_list = load_tasks()
+        options = tasks_list
+        options.append("Add A Task")
+        title = "Choose an option:"
+        selected_option, index = pick.pick(options, title, indicator="=>")
+        if selected_option == options[-1]:
+            add_task(input("Enter A New Task: "))
+        else:
+            edited_task = input(f"Change {selected_option} To: ")
+            edit_task(edited_task, index)
 
 
 def main():
@@ -74,12 +81,10 @@ def main():
         options = ["Start A New Session", "Add/Edit Task", "Stats", "Exit"]
         title = "Choose an option:"
         selected_option, index = pick.pick(options, title, indicator="=>")
+
         if selected_option == options[0]:
             new_session_choice()
-            # minutes_to_add = int(input("Enter The Session Time (In Minutes): "))
-            # seconds = convert_minutes_to_seconds(minutes_to_add)
-            # break
-            #
+
         if selected_option == options[1]:
             add_or_edit_tasks()
             break
