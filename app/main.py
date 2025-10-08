@@ -1,6 +1,8 @@
 import pick
 import time
 
+from handle_tasks import load_tasks
+
 
 # get a time in minutes and convert it to seconds if the minutes are greater than 0 or it will produce and error
 def convert_minutes_to_seconds(minutes: int) -> int:
@@ -23,7 +25,10 @@ def new_session_choice():
     selected_option, index = pick.pick(options, title, indicator="=>")
     if selected_option == options[0]:
         task = choose_task()
-        start_session((int(input("Enter The Session Time (In Minutes):")) * 60), task)
+        start_session((int(input("Enter The Session Time (In Minutes): ")) * 60), task)
+    elif selected_option == options[1]:
+        task = choose_task()
+        start_session(0, task)
 
 
 # Get a task choise and return it
@@ -39,14 +44,27 @@ def choose_task():
 
 def start_session(duration, task):
     print(task)
+    if duration > 0:
+        while duration:
+            mins, secs = divmod(duration, 60)
+            timer = "{:02d}:{:02d}".format(mins, secs)
+            print(timer, end="\r")
+            time.sleep(1)
+            duration -= 1
+    else:
+        while True:
+            mins, secs = divmod(duration, 60)
+            timer = "{:02d}:{:02d}".format(mins, secs)
+            print(timer, end="\r")
+            time.sleep(1)
+            duration += 1
 
-    while duration:
-        mins, secs = divmod(duration, 60)
-        timer = "{:02d}:{:02d}".format(mins, secs)
-        print(timer, end="\r")  # Overwrite the line each second
 
-        time.sleep(1)
-        duration -= 1
+def add_or_edit_tasks():
+    tasks_list = load_tasks()
+    for task in tasks_list:
+        print(task)
+    # while True:
 
 
 def main():
@@ -61,6 +79,10 @@ def main():
             # minutes_to_add = int(input("Enter The Session Time (In Minutes): "))
             # seconds = convert_minutes_to_seconds(minutes_to_add)
             # break
+            #
+        if selected_option == options[1]:
+            add_or_edit_tasks()
+            break
 
 
 if __name__ == "__main__":
