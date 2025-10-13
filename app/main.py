@@ -1,68 +1,14 @@
 import pick
-import time
 
+from app.add_or_edit_tasks import add_or_edit_tasks
 from app.start_a_new_session import new_session_choice
-from handle_tasks import add_task, edit_task, load_tasks
+
+# from handle_tasks import add_task, edit_task, load_tasks
 
 
-def select_options():
-    pass
-
-
-# # It will ask the use either he want to set a specific duration or wanna do an open time session
-# def new_session_choice():
-#     options = ["Set Session Duration", "Free Time"]
-#     title = "Choose an option:"
-#     selected_option, index = pick.pick(options, title, indicator="=>")
-#     if selected_option == options[0]:
-#         task = choose_task()
-#         start_session((int(input("Enter The Session Time (In Minutes): ")) * 60), task)
-#     elif selected_option == options[1]:
-#         task = choose_task()
-#         start_session(0, task)
-#
-
-# # Get a task choise and return it
-# def choose_task():
-#     options = ["Reading Quran", "Coding", "Random"]
-#     title = "Choose an option:"
-#     selected_option, index = pick.pick(options, title, indicator="=>")
-#     return selected_option
-#
-
-# A countdown that will the take the time in seconds and display it
-
-
-# def start_session(duration, task):
-#     print(task)
-#     if duration > 0:
-#         while duration:
-#             mins, secs = divmod(duration, 60)
-#             timer = "{:02d}:{:02d}".format(mins, secs)
-#             print(timer, end="\r")
-#             time.sleep(1)
-#             duration -= 1
-#     else:
-#         while True:
-#             mins, secs = divmod(duration, 60)
-#             timer = "{:02d}:{:02d}".format(mins, secs)
-#             print(timer, end="\r")
-#             time.sleep(1)
-#             duration += 1
-#
-#
-def add_or_edit_tasks():
-    while True:
-        tasks_list = load_tasks()
-        options = tasks_list
-        options.append("Add A Task")
-        title = "Choose an option:"
-        selected_option, index = pick.pick(options, title, indicator="=>")
-        if selected_option == options[-1]:
-            add_task(input("Enter A New Task: "))
-        else:
-            edited_task = input(f"Change {selected_option} To: ")
-            edit_task(edited_task, index)
+def select_options(options_list, title):
+    selected_option, index = pick.pick(options_list, title, indicator="=>")
+    return selected_option, index
 
 
 def main():
@@ -71,7 +17,7 @@ def main():
     while True:
         options = ["Start A New Session", "Add/Edit Task", "Stats", "Exit"]
         title = "Choose an option:"
-        selected_option, index = pick.pick(options, title, indicator="=>")
+        selected_option, index = select_options(options, title)
 
         if selected_option == options[0]:
             new_session_choice()
